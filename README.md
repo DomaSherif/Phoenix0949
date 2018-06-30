@@ -1,2 +1,2 @@
 # Phoenix61681
-A Project for Making data for a big AI That
+A Discord AI bot Runs on using Python
