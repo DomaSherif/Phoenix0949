@@ -2,6 +2,7 @@ import discord
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 import re
+import os
 
 #Variables and Configurations
 Owner_ID = '324786471678771200' #here is the owner of the server ID
@@ -176,4 +177,4 @@ async def on_ready():
 	print('Logged in as: ', client.user.name)
 	print('Bot ID: ', client.user.id)
 
-client.run(process.env.BOT_TOKEN)
+client.run(os.getenv('BOT_TOKEN'))
