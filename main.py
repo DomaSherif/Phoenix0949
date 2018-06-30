@@ -3,6 +3,7 @@ import discord
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 import re
+import os
 print('assets loaded!')
 
 #Variables and Configurations
