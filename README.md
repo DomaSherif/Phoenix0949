@@ -1,2 +1,2 @@
-# Phoenix0949
+# Phoenix
 A Discord AI bot Runs on using Python
