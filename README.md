@@ -19,4 +19,4 @@ You will need bot's client ID to invite it your server you can generate your own
 
 
 ## 📄 License
-MrKio bot is MPL V2 as found in the [License](https://github.com/MrKioZ/Phoenix/License)
+Phoenix bot is MIT as found in the [License](https://github.com/MrKioZ/Phoenix/License)
