@@ -1,5 +1,5 @@
+import operator, discord, operator, random, ast, requests, asyncio, time, wikipedia
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
-import operator, discord, operator, random, ast
 from gingerit.gingerit import GingerIt
 from discord.ext import commands
 from chatterbot import ChatBot
@@ -7,9 +7,9 @@ from config import Embed_Color
 from datetime import datetime
 from config import operators
 
+
 chatbot = ChatBot('Phoenix', read_only=True)
 parser = GingerIt()
-
 
 _OP_MAP = {
     ast.Add: operator.add,
@@ -82,7 +82,53 @@ class AdaptorsManager:
 
             return response
 
-    # class ExamleAdaptor:
+    class QuotationAdaptor:
+
+        def __init__(self):
+            self.response = ''
+
+        def can_process(self, message):
+
+            if (('give' in message) or ('tell' in message)) and (('quotation' in message) or ('quote' in message)):
+                confidence = random.uniform(0.5, 1)
+            else:
+                confidence = 0
+
+            return confidence
+
+        def process(self, message):
+
+            with requests.get('https://api.quotable.io/random') as r:
+
+                r = r.json()
+                time.sleep(1.5)
+                return '\n'+r['content']+'\n'+'by '+r['author']
+
+    class CelebrityAdaptor:
+
+        def __init__(self):
+            pass
+
+        def can_process(self, message):
+
+            if 'who' in message.lower():
+                confidence = random.uniform(0.5, 1)
+            else:
+                confidence = 0
+
+            return confidence
+
+        def process(self, message):
+
+            message = message.split(" ", 2)[2]
+
+            print(message)
+
+            response = wikipedia.summary(message)
+
+            return '\nAccourding to Wikipedia \n'+response
+
+    # class ExampleAdaptor:
     #
     #     def can_process(self, message):
     #
@@ -96,7 +142,7 @@ class AdaptorsManager:
     #
     #         return response
 
-    Adaptors = [MathAdaptor() , TimeAdaptor()]
+    Adaptors = [MathAdaptor() , TimeAdaptor(), QuotationAdaptor(), CelebrityAdaptor()]
 
     def LogCheck(self, message):
 
@@ -108,7 +154,7 @@ class AdaptorsManager:
 
         Adaptor = max(confidence, key=confidence.get)
 
-        if confidence[Adaptor] > 0.5:
+        if confidence[Adaptor] >= 0.5:
             return str(Adaptor.process(message))
         else:
             return message
